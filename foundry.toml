@@ -1,0 +1,32 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+script = "script"
+
+# Pinned by version only. The launch compares the deployed bytes without a
+# metadata hash, so bytecode_hash must be "none" for the build to be reproducible.
+solc = "0.8.26"
+evm_version = "cancun"
+bytecode_hash = "none"
+cbor_metadata = false
+
+# The Uniswap v4 PoolManager that the launch-flow tests build in place needs the
+# IR pipeline to compile; the token itself is tiny and is unaffected.
+optimizer = true
+optimizer_runs = 200
+via_ir = true
+
+# Never ffi, never filesystem access.
+ffi = false
+fs_permissions = []
+
+[profile.default.fuzz]
+runs = 256
+
+[fmt]
+line_length = 120
+tab_width = 4
+bracket_spacing = false
+int_types = "long"
